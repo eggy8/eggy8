@@ -141,7 +141,7 @@ most useful where the domain is operational and the failure modes are physical.
 **What I haven't done:** worked inside a team's code review process, or run
 anything under real load. Both are worth knowing before you hire me.
 
-📧 eddiearanda08@gmail.com
+📧 eduardoarandajr@gmail.com
 
 <sub>Figures verified by execution 30 Jul 2026. Every number above is the output of
 a command, not an estimate. Full methodology, the control-run data and the
