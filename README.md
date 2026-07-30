@@ -13,7 +13,7 @@ Most people in this space have one or the other.
 |---|---|
 | Automated checks, executed | **1,347** |
 | Python tests | 462 |
-| Assertions in the 3D ops view | <!--counts:dungeon.short-->1,774, 0 failing<!--/counts:dungeon.short--> |
+| Assertions in the 3D ops view | <!--counts:dungeon.short-->1,810, 0 failing<!--/counts:dungeon.short--> |
 | Hand-written mutations | **138 planted, 138 killed, 0 survived** |
 | Mechanically generated mutations | **389** |
 | **Mechanical kill rate** | **98.4%** — 379 killed / 6 survived / 4 invalid |
