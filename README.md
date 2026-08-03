@@ -31,30 +31,49 @@ and a verification claim from someone who hides the denominator is worth nothing
 
 ### Verification, because it's the part most people skip
 
-Every figure in this table was re-measured **2 Aug 2026** by running the command
+Every figure in this table was re-measured **3 Aug 2026** by running the command
 named beside it. Figures elsewhere on the page that were not are marked as such.
 
 | | Measured | How |
 |---|---|---|
-| Python tests, passing | **919 / 919** | `pytest` across 5 repos |
-| Assertions in the 3D ops view | <!--counts:dungeon.short-->1,955, 0 failing<!--/counts:dungeon.short--> | `npm run counts` |
-| **Automated checks, executed** | **2,779** | the two rows above, summed |
-| Hand-written mutations planted | **144** | `mutate.py --list` |
+| Python tests, passing | **1,749 / 1,749** | `pytest` across 15 repos |
+| Node assertions | **2,532** | 3 repos, `npm test` |
+| — of those, the 3D operations view | <!--counts:dungeon.short-->2,072, 0 failing<!--/counts:dungeon.short--> | `npm run counts` |
+| **Automated checks, executed** | **4,281** | the two rows above, summed |
+| Hand-written mutations, **all killed** | **772** | `mutate.py` / `mutate.mjs` |
+| Repositories carrying tests | **18 of 21** | — |
 
-The Python figure is 592 (dispatch policy + API) + 113 (orchestrator) + 105
-(driver backbone) + 76 (JARVIS) + 33 (growth engine). I list the split because
-the single number is the part that goes stale quietly — and it did: this page
-said 587 and 914 until this morning, when a commit to the dispatch agent added
-five tests and moved both.
+**Yesterday that read 919 tests across 5 repos, 144 mutations, and 6 of 21
+repositories.** Fifteen repos had no tests at all. That is the more honest
+version of the old number: a fleet-wide claim resting on the six repositories
+that happened to have a suite.
+
+The Python figure is 595 (dispatch policy + API) + 194 (orchestrator) + 150
+(driver tracker) + 135 (audit) + 105 (driver backbone) + 90 (KPI) + 76 (JARVIS)
++ 72 (command proxy) + 72 (traffic) + 64 (travel) + 48 (security) + 45 (founders)
++ 44 (compliance) + 33 (growth) + 26 (pre-destination). I list the split because
+the single number is the part that goes stale quietly.
 
 **A green test suite proves nothing until you've watched every assertion fail on
 purpose.** So I break the decision logic one edit at a time and require the suite
-to go red. 144 such mutations are planted in the two policy repos today — 99 in
-the dispatch agent and 45 in the orchestrator, counted by running
-`scripts/mutate.py --list` in each. *I did not re-run that harness in this pass* —
-the last recorded run was at a 138-mutation vintage and killed all of them, and I
-am not carrying that result forward onto a count it wasn't measured against.
-Re-verify with `python scripts/mutate.py`.
+to go red. **772 such mutations are planted across 15 repositories, and every one
+of them was run today: 772 killed, 0 survived.**
+
+**Two of those repositories taught me that a clean mutation score can be a lie of
+omission.** The harness in each reported a full sweep — and neither had ever
+opened the most consequential file it shipped:
+
+| Module | What it decides | Mutations before | After |
+|---|---|---|---|
+| `orchestrator/policy/control.py` | whether the fleet is halted | **0** | 10, all killed |
+| `dispatch-agent/policy/verification.py` | whether a load may be **booked** | **0** | 9, all killed |
+
+`control.py` had 51 tests and a docstring crediting it with "45 mutants killed" —
+a repo-wide figure from a run that never touched the file. `verification.py` holds
+`may_commit()`, the single question asked before freight is booked, and had 20
+tests with nothing proving any of them could fail. **A green score says nothing
+about the files the harness never opened**, and both were found by counting rather
+than by reading.
 
 Then I did the same thing with a mutator that has no judgement — on 30 Jul it
 generated 389 edits, not the 93 I chose:
@@ -101,6 +120,13 @@ classified nor closed them:
 30 Jul, the day that file was added. **"Zero outstanding" was true of a six-file
 `policy/`. It is not true of the eight-file one, and I would rather say that than
 re-print 98.4%.**
+
+**Still open, and deliberately not marked closed.** `verification.py` now carries
+nine hand-written mutations and all nine die — but those four survivors came from
+the *generated* mutator, which I have **not** re-run since 2 Aug. Two different
+tools, two different mutant sets. Killing the ones I chose says nothing about the
+ones a generator finds, and folding the two together to reach a rounder number is
+the exact move this page exists to refuse.
 
 *(The three 30 Jul rows and the survivor classification are from that run and are
 not re-derived here. The 2 Aug row I ran myself:
@@ -285,9 +311,12 @@ waiting to be asked. All three are worth knowing before you hire me.
 
 📧 eduardoarandajr@gmail.com
 
-<sub>Test, assertion, mutation-count, agent and service figures re-measured by
-execution <!--counts:dungeon.date-->3 Aug 2026<!--/counts:dungeon.date-->, which
-includes the 426-mutant `policy/` run reported above. Figures explicitly marked as
+<sub>Test, assertion, mutation and agent figures re-measured by execution
+<!--counts:dungeon.date-->3 Aug 2026<!--/counts:dungeon.date--> — every suite and
+every hand-written mutation harness in the fleet was run, not sampled: 1,749
+Python tests, 2,532 Node assertions, 772 mutations killed with none surviving.
+The 426-mutant generated `policy/` run reported above is from 2 Aug and was NOT
+re-run. Figures explicitly marked as
 carried forward — cost, database CPU, the three 30 Jul kill rates and the
 classification of the six survivors from that run, and the 1 Aug whole-repo and
 fleet-wide mutant counts — were not re-run. No live hostnames, deployment project
