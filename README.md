@@ -37,7 +37,7 @@ named beside it. Figures elsewhere on the page that were not are marked as such.
 | | Measured | How |
 |---|---|---|
 | Python tests, passing | **919 / 919** | `pytest` across 5 repos |
-| Assertions in the 3D ops view | <!--counts:dungeon.short-->1,860, 0 failing<!--/counts:dungeon.short--> | `npm run counts` |
+| Assertions in the 3D ops view | <!--counts:dungeon.short-->1,955, 0 failing<!--/counts:dungeon.short--> | `npm run counts` |
 | **Automated checks, executed** | **2,779** | the two rows above, summed |
 | Hand-written mutations planted | **144** | `mutate.py --list` |
 
@@ -286,7 +286,7 @@ waiting to be asked. All three are worth knowing before you hire me.
 📧 eduardoarandajr@gmail.com
 
 <sub>Test, assertion, mutation-count, agent and service figures re-measured by
-execution <!--counts:dungeon.date-->2 Aug 2026<!--/counts:dungeon.date-->, which
+execution <!--counts:dungeon.date-->3 Aug 2026<!--/counts:dungeon.date-->, which
 includes the 426-mutant `policy/` run reported above. Figures explicitly marked as
 carried forward — cost, database CPU, the three 30 Jul kill rates and the
 classification of the six survivors from that run, and the 1 Aug whole-repo and
