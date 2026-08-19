@@ -9,6 +9,8 @@ My strongest work is not “make a chatbot.” It is the control layer around so
 
 Most of the engineering repositories are private by design. This public profile summarizes selected evidence without exposing source code, credentials, live hostnames, customer data, or proprietary operating details.
 
+**The contribution graph is intentionally public while the underlying ARANDA source repositories remain private.** The activity can be visible without turning proprietary code into a public portfolio. The case studies below are the public disclosure layer.
+
 ---
 
 ## Current truth
@@ -91,6 +93,14 @@ A public carrier-intake path was hardened around durable event identity rather t
 Notification work was deliberately ordered **after** the lead became durable so a Slack failure could never cost the underlying enquiry. Real PostgreSQL concurrency probes were used where SQLite could not prove the locking behavior.
 
 **Pattern:** idempotency · immutable creation evidence · PostgreSQL concurrency · durable-before-notify ordering.
+
+### 7. A received audit report was not the same thing as a verified finding
+
+An audit-report endpoint accepted a submitted result and the receiving system stamped the audit agent's identity onto the stored row. The dashboard then presented the row as a pass/fail finding even though the receiving system had not proved that the named agent authored it or that an independent audit actually ran.
+
+The repair tightened the submission boundary, changed the presentation to **received / reported pass / reported fail**, and kept those stored reports from silently becoming control or booking authority. A shared service credential improves the boundary, but it still does not prove independent authorship.
+
+**Pattern:** provenance overclaim · attribution · audit-trail honesty · reporting vs verification.
 
 ---
 
