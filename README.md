@@ -1,327 +1,166 @@
-## Eduardo Aranda Jr
+# Eduardo Aranda Jr.
 
-I built a 17-agent freight dispatch system. It is deployed, it runs, and **it has
-never carried a load.**
+**Applied AI Systems Architect & Reliability Engineer**  
+Agent reliability · authority & provenance · consequential workflow hardening · physical-world AI
 
-**15 years in trucking. 18 months building multi-agent systems.**
-Most people in this space have one or the other.
+I am building **ARANDA**, a private multi-service freight operating prototype shaped by about 15 years in trucking and an AI-assisted engineering workflow.
 
----
+My strongest work is not “make a chatbot.” It is the control layer around software that can affect the real world: **who is acting, what they are allowed to do, what evidence is current, what remains unknown, what a human actually approved, what happened outside the system, and whether the tests can prove the difference.**
 
-### The scope, before any of the numbers
-
-Everything below is real and measured. None of it has survived contact with a
-paying customer.
-
-| | |
-|---|---|
-| Completed loads, ever | **0** |
-| Revenue | **$0** |
-| Drivers in the database | 3, all test records |
-| Settled invoices, rate history, lane performance | none — those tables are empty |
-
-The software works. The business has not started. Every capability that would
-need completed loads to demonstrate — margin analysis, lane pricing, utilisation
-— is built and waiting for the first real load, not operating today.
-
-I lead with this because the rest of the page is a set of verification claims,
-and a verification claim from someone who hides the denominator is worth nothing.
+Most of the engineering repositories are private by design. This public profile summarizes selected evidence without exposing source code, credentials, live hostnames, customer data, or proprietary operating details.
 
 ---
 
-### Verification, because it's the part most people skip
+## Current truth
 
-Every figure in this table was re-measured **3 Aug 2026** by running the command
-named beside it. Figures elsewhere on the page that were not are marked as such.
+ARANDA is an **advanced distributed prototype undergoing production hardening**.
 
-| | Measured | How |
-|---|---|---|
-| Python tests, passing | **1,749 / 1,749** | `pytest` across 15 repos |
-| Node assertions | **2,532** | 3 repos, `npm test` |
-| — of those, the 3D operations view | <!--counts:dungeon.short-->2,072, 0 failing<!--/counts:dungeon.short--> | `npm run counts` |
-| **Automated checks, executed** | **4,281** | the two rows above, summed |
-| Hand-written mutations, **all killed** | **772** | `mutate.py` / `mutate.mjs` |
-| Repositories carrying tests | **18 of 21** | — |
+It has **not** carried a verified real freight load, has **not** generated dispatch revenue, and is **not** production-proven. I do not use test counts, deployments, or mutation scores as substitutes for that missing real-world proof.
 
-**Yesterday that read 919 tests across 5 repos, 144 mutations, and 6 of 21
-repositories.** Fifteen repos had no tests at all. That is the more honest
-version of the old number: a fleet-wide claim resting on the six repositories
-that happened to have a suite.
+The current engineering estate includes a 17-service/agent operating architecture spanning freight evaluation, driver state, orchestration, JARVIS, command/control, compliance, planning, audit/assurance, and supporting services.
 
-The Python figure is 595 (dispatch policy + API) + 194 (orchestrator) + 150
-(driver tracker) + 135 (audit) + 105 (driver backbone) + 90 (KPI) + 76 (JARVIS)
-+ 72 (command proxy) + 72 (traffic) + 64 (travel) + 48 (security) + 45 (founders)
-+ 44 (compliance) + 33 (growth) + 26 (pre-destination). I list the split because
-the single number is the part that goes stale quietly.
-
-**A green test suite proves nothing until you've watched every assertion fail on
-purpose.** So I break the decision logic one edit at a time and require the suite
-to go red. **772 such mutations are planted across 15 repositories, and every one
-of them was run today: 772 killed, 0 survived.**
-
-**Two of those repositories taught me that a clean mutation score can be a lie of
-omission.** The harness in each reported a full sweep — and neither had ever
-opened the most consequential file it shipped:
-
-| Module | What it decides | Mutations before | After |
-|---|---|---|---|
-| `orchestrator/policy/control.py` | whether the fleet is halted | **0** | 10, all killed |
-| `dispatch-agent/policy/verification.py` | whether a load may be **booked** | **0** | 9, all killed |
-
-`control.py` had 51 tests and a docstring crediting it with "45 mutants killed" —
-a repo-wide figure from a run that never touched the file. `verification.py` holds
-`may_commit()`, the single question asked before freight is booked, and had 20
-tests with nothing proving any of them could fail. **A green score says nothing
-about the files the harness never opened**, and both were found by counting rather
-than by reading.
-
-Then I did the same thing with a mutator that has no judgement — on 30 Jul it
-generated 389 edits, not the 93 I chose:
-
-| Suite | Mutants | Kill rate |
-|---|---|---|
-| 282 tests — control, 30 Jul | 389 | **86.2%** |
-| 316 tests — 30 Jul | 389 | **93.0%** |
-| 362 tests — 30 Jul | 389 | **98.4%** |
-| 592 tests — re-run 2 Aug | 426 | **97.7%** |
-
-**The last row is not a decline, it is a different denominator.** `policy/` gained
-`verification.py` between the runs, so the 2 Aug run scores a larger mutant set:
-426 generated, 416 killed, 10 survived, 0 invalid. I ran it today rather than
-carry the 98.4% forward onto a directory it was never measured against.
-
-**The control run is the part that makes the rest mean anything.** Without a
-baseline over the same mutant set, "we added tests and the number went up" isn't
-attributable to anything. I re-ran the control from a rebuilt working copy with a
-rewritten tool and it reproduced exactly — 332 / 53 / 4, all six per-file
-survivor counts identical.
-
-**Those six survivors are closed, not outstanding.** Four are provable
-equivalents — one checked exhaustively over the integers, two proven bit-identical
-in IEEE double arithmetic. Two are observable but *arbitrary*, where pinning them
-would freeze an unspecified choice into a contract. **I stopped at 98.4% on
-purpose. Chasing 100% would have meant writing assertions that cannot fail**, and
-I'd rather have a saturated score with a written floor than a perfect one that
-invites the question of how many of those assertions are real.
-
-**Four more are open, and "closed" had a date on it.** Today's run left ten
-survivors. Six sit on lines `git blame` dates to 28–29 Jul, so they were in scope
-when the six above were classified. The other four are not — and I have neither
-classified nor closed them:
-
-| Surviving mutant | What it does |
-|---|---|
-| `economics.py:252` `return 0.15` → `0.3` | the constant doubles, nothing fails |
-| `verification.py:113` `[:120]` → `[:121]` | error text truncated one character later |
-| `verification.py:113` `[:120]` → `[:0]` | the diagnostic text disappears entirely |
-| `verification.py:152` `or` → `and` | a fallback becomes a conjunction |
-
-`git blame` dates `economics.py:252` to 1 Aug and both `verification.py` lines to
-30 Jul, the day that file was added. **"Zero outstanding" was true of a six-file
-`policy/`. It is not true of the eight-file one, and I would rather say that than
-re-print 98.4%.**
-
-**Still open, and deliberately not marked closed.** `verification.py` now carries
-nine hand-written mutations and all nine die — but those four survivors came from
-the *generated* mutator, which I have **not** re-run since 2 Aug. Two different
-tools, two different mutant sets. Killing the ones I chose says nothing about the
-ones a generator finds, and folding the two together to reach a rounder number is
-the exact move this page exists to refuse.
-
-*(The three 30 Jul rows and the survivor classification are from that run and are
-not re-derived here. The 2 Aug row I ran myself:
-`automut.py --repo dispatch-agent --target policy/ --cmd "python -m pytest -q"`.
-A fleet audit on 1 Aug measured the same directory at ~97.9% over ~422 mutants.)*
+The next important proof is not another dashboard or bigger test number. It is an authenticated, carrier-authorized, end-to-end freight workflow that survives contact with a real load.
 
 ---
 
-### What the `policy/` kill rate is not
+## What I work on
 
-Those numbers — 98.4% on 30 Jul, 97.7% today — cover `policy/`, and on 30 Jul
-`policy/` was **six files.** It is **eight files today**
-(`ls dispatch-agent/policy/*.py`), seven of which generate mutants:
-`verification.py` arrived on 30 Jul in commit `c6745d7`, and `__init__.py`
-generates none. The repository containing them scored **14.2%** across all 3,303
-of its mutants in the 1 Aug fleet audit.
+### Consequential AI / agent workflows
 
-Every row below is from that 1 Aug audit and none of it is re-measured here. The
-denominators have already moved: the same generator emits **3,326** whole-repo
-mutants and **426** in `policy/` today, and **207** in the orchestrator's
-`policy/`, so treat the mutant counts as the audit's, not this morning's.
+I focus on systems where an AI or automation can do more than generate text — it can read business state, use tools, call APIs, change records, prepare decisions, or contribute to an external action.
 
-| Scope | Mutants (1 Aug) | Kill rate (1 Aug) |
-|---|---|---|
-| `policy/` — HOS, compliance, rate floors, retry | ~422 | **~97.9%** |
-| Orchestrator `policy/` — arbitration, load identity | 203 | **83.3%** |
-| Decision modules — load scoring, triangulation | 884 | **4–5%** |
-| API surface — request in, answer out | 2,179 | **0.6–14.7%** |
-| **Whole repo** | **3,303** | **14.2%** |
+The questions I care about are things like:
 
-Both numbers are correctly measured; they have different denominators. **A
-high-nineties kill rate on the decision layer and 14.2% on the repository
-containing it are not contradictory findings, and holding both is the point.**
-
-**The judgement this system makes is well-guarded. The code that carries that
-judgement to a driver is not.** The cause is mechanical rather than cultural:
-policy modules are pure functions, trivially testable, and were tested well. The
-perimeter files import database drivers and HTTP clients at module load, those
-imports fail under test, so **nothing runs that code at all** — it is read as
-text. The pattern reproduced independently in three repositories, which is what
-makes it structural. The fix is dependency stubs, not diligence.
-
-Fleet-wide, the 1 Aug audit measured **23,766 mutants across 19 repositories**, up
-from 389. I have not re-generated that fleet figure today, and dispatch-agent
-alone has grown by 23 mutants since, so read it as a 1 Aug measurement. I would
-rather publish the 14.2% than let the `policy/` figure stand in for it.
+- **Service authentication ≠ human authority.** A valid internal credential does not prove a person authorized a business action.
+- **Recommendation ≠ approval ≠ execution.** Each needs its own state and evidence.
+- **UNKNOWN must stay UNKNOWN.** Missing, stale, invalid, or unreachable data must not quietly become a favorable default.
+- **Request ≠ external effect.** A timeout does not prove nothing happened, and an HTTP 200 does not prove the intended business outcome occurred.
+- **A test suite can be wrong about itself.** Harness integrity, fixtures, dependency boundaries, negative controls, and mutation validity are part of the thing being tested.
+- **Identity must survive service boundaries.** Human-readable names, caller-supplied tenant IDs, and echoed request fields are not authoritative identity.
 
 ---
 
-### What's running
+## Selected engineering cases
 
-| | Measured |
-|---|---|
-| Agents in the registry | **17** |
-| Railway services | **31**, across 17 projects |
-| — of those, application services | 20 |
-| — of those, database services | 11 — ten Postgres and one MongoDB |
-| Infrastructure cost | ~$20/month |
+These are redacted summaries of defects found and hardened in the private ARANDA estate.
 
-**Nine of the ten Postgres instances are idle** — every live database variable in
-the fleet points at one shared instance, and the rest measured zero network
-traffic over 48 hours. "31 services" is an accurate count and a misleading
-impression, so here is the breakdown instead.
+### 1. A service credential was being mistaken for human authority
 
-"Agent is ACTIVE" in my own orchestrator means one thing only: a 30-second probe
-got HTTP 200 from `/health`. It does not mean the agent is doing useful work. One
-of the seventeen is ACTIVE and correctly reporting that it is unconfigured —
-checked again today: it answers `/health` with `ok` and its own status endpoint
-with `UNCONFIGURED`, `tracked: 0`.
+A public conversational path could recognize a driver-creation request and then use JARVIS's internal service credential to write into the driver system. The downstream service correctly required a credential; the problem was that the public-facing service was **lending its own authority to an unauthenticated caller**.
 
-*The service, project and database counts above were re-listed from the Railway
-API today. Cost and the 0.6% database CPU figure are carried forward from 30 Jul
-and not re-measured here.*
+The repair preserved the useful part — conversational intake, field extraction, missing-field analysis — while removing the consequential write. The system now prepares the action and states that authenticated human authority is still required.
 
----
+**Pattern:** confused deputy · service auth vs human auth · preserve preparation while containing execution.
 
-### How I work
+### 2. UNKNOWN values were improving decisions
 
-**Fail closed where it matters, fail open where it doesn't — and write down
-which.** From my orchestrator's auth layer:
+Several freight-ranking paths converted missing operational facts into favorable known values: an ungraded broker could become a mid-tier broker, unmeasured deadhead could behave like zero miles, and missing regional information could select a favorable rate floor.
 
-> *A missing env var must not silently turn PAUSE / OVERRIDE / KILL into open
-> endpoints. Unconfigured means refuse, not allow.*
+The repair carries absence explicitly, prevents unknown inputs from buying rank, and makes downstream UI/JARVIS language say when a fact was not measured rather than inventing a clean answer.
 
-Two guards, one file, opposite defaults, because the consequences differ. The
-read endpoints keep working half-configured; command dispatch returns 503.
+**Pattern:** favorable defaults · provenance · explicit uncertainty · grounded UI/model context.
 
-**Not knowing is its own state.** My compliance service reports `UNCONFIGURED`
-rather than `COMPLIANT` when it has no obligations loaded — verified live today,
-`tracked: 0`. Its obligations table is **deliberately empty and must not be
-filled from a model's memory**: what a dispatch operation owes differs depending
-on whether the entity is a broker, a dispatch service or a motor carrier, and a
-plausible-looking compliance calendar fails silently and confidently. **A
-dashboard reading COMPLIANT about a filing nobody made is worse than an empty
-room.** The list comes from me or from FMCSA primary sources, or it doesn't exist.
+### 3. An upstream outage looked like an empty freight board
 
-**Assume the measuring instrument is broken too.** My mutation harness once
-reported 39 of 39 passing while silently testing an unmutated file. It now
-self-checks with two canaries before it's allowed to report anything, restores
-every touched file from an in-memory copy, and re-hashes them all before it will
-exit 0. I have since caught the same class of bug **five** times in this
-codebase, including three in tools I wrote myself, and every fix was a gate
-rather than more care.
+A booked-load fetch did not raise on non-2xx responses. An upstream 500 with a JSON error body became an empty list, so the scan reported success with zero freight — indistinguishable from a legitimately quiet board.
 
-**The same discipline applies to the numbers on this page.** The assertion count
-above sits inside a generated marker, written by a script that refuses to write
-anything at all if a single verification script fails. It also refuses to fill
-the cross-repo total, because it can only measure one repo and writing a
-repo-local number into a field labelled cross-repo is the exact category error it
-exists to stop.
+The repaired path separates **“we looked and found nothing”** from **“we could not look.”**
 
-**Prove equivalence, don't assume it.** When a mutation survives, "probably fine"
-isn't an answer. Either there's an input that distinguishes the two versions or
-there isn't, and finding out is arithmetic.
+**Pattern:** dependency failure semantics · false-success prevention · operational truth.
 
-**Uncertainty resolved favourably is the defect I keep finding.** An audit found
-nine instances of one shape of it in this fleet: a fallback of `or 11.0` for
-unknown hours-of-service time, appearing four times, so **an unknown driver
-silently became a legal driver.** A downstream agent read an authentication
-failure as "this driver has a full 11 hours available." A safety check that fails
-open is worse than no safety check, because it also produces confidence. Fixed
-and deployed.
+### 4. Green tests did not prove the real path worked
 
-**Ship the diagnosis, not the guess.** Three brightness fixes in a row missed a
-rendering bug because nobody checked the alpha math. Eight ghosted surfaces along
-one sight line leave `1 - 0.9^8` — about 57% haze. **It was a transparency
-problem wearing a lighting problem's clothes.**
+Cross-repository testing exposed cases where fixtures or stubs were richer than the real producer/consumer contract. In one important freight path, a large green suite did not establish that the actual endpoint and real package topology could execute correctly.
 
-**Record the wrong answers.** My commit messages document what didn't work and
-why, not just what shipped. The next person reading them is usually me.
+The response was not “add more tests” in the abstract. It was to make the real topology explicit, fail loudly when required sibling context is absent, and drive behavior through the actual boundary.
+
+**Pattern:** contract testing · fixture realism · test topology · green-suite skepticism.
+
+### 5. The mutation harness itself became part of the threat model
+
+A mutation runner originally edited the canonical checkout and restored files in `finally`. A killed process proved that restoration-on-exit was not a safety boundary: the canonical source could be left mutated.
+
+The harness was moved into disposable Git worktrees, given dirty-tree refusal, source fingerprints, mutation-match validation, and negative/self-check controls. Later work found mutation definitions that had silently stopped matching after refactors, reinforcing the rule that **a clean mutation report is meaningless if the mutations did not actually run.**
+
+**Pattern:** semantic mutation testing · harness integrity · negative controls · reproducible evidence.
+
+### 6. Website intake had to survive retries and concurrency honestly
+
+A public carrier-intake path was hardened around durable event identity rather than carrier identity. Replays of the same submission return the same lead; conflicting content under the same event is refused; a database unique index arbitrates concurrent inserts; the original intake subject is stored immutably and versioned.
+
+Notification work was deliberately ordered **after** the lead became durable so a Slack failure could never cost the underlying enquiry. Real PostgreSQL concurrency probes were used where SQLite could not prove the locking behavior.
+
+**Pattern:** idempotency · immutable creation evidence · PostgreSQL concurrency · durable-before-notify ordering.
 
 ---
 
-### And one project I killed, for two measured reasons
+## How I build
 
-I built an autonomous trading system — a deterministic risk kernel with no
-override path, enforced by a self-test that greps its own source.
+**Fail closed where the consequence requires proof.** Missing security or authority configuration is not permission.
 
-**Reason one: the predictor had no edge, and failed in the dangerous direction.**
-50.5% directional accuracy against a 53.6% base rate, negative Brier skill score,
-and **most wrong at its highest confidence** — so every mechanism designed to
-press the advantage would have pressed the mistakes instead. **I recommended
-against funding it. Zero capital deployed.**
+**Keep observation separate from authority.** A system can observe, summarize, rank, warn, or prepare without automatically gaining permission to act.
 
-**Reason two, found afterward: I pointed the mutation harness at the risk kernel
-I'd called sound.** It scored **44.6%** — against the freight decision layer's
-98.4% that same week, same tool. **The maximum risk per trade could be doubled
-without a single self-test failing.**
+**Bind approvals to the exact thing approved.** If material terms or the subject change, the old approval should not silently travel with them.
 
-That figure has since been reproduced independently. The original tool was lost
-when a temp directory cleared; a rebuilt tool landed at **44.1%** on the same
-file. Half a percentage point apart means the number was a property of the code,
-not of the instrument.
+**Preserve provenance.** A value without a trustworthy source, subject, and observation context is not equivalent to the same number with evidence.
 
-**44.6% is the useful number.** A tool that returns 98% everywhere isn't
-measuring anything; the spread is what makes both figures mean something. And
-nobody audits a dead project — there was no funding left to protect. I ran it
-because I'd written "sound risk kernel" and hadn't earned it.
+**Make failure states diagnostic.** `UNKNOWN`, `UNCONFIGURED`, `COULD_NOT_CHECK`, `REFUSED`, `CONTAINED`, and `EXTERNAL_EFFECT_UNKNOWN` are different operational states and should not collapse into one boolean.
 
-Most portfolios describe systems that shipped. Being able to describe one you
-correctly stopped — and then keep measuring it — is rarer and, I'd argue, more
-useful.
+**Attack the measuring instrument too.** Tests, mutation harnesses, mocks, fixtures, route inventories, and audit records can all create false confidence.
+
+**Record what did not work.** My commit history is intentionally detailed because failed assumptions are part of the engineering record.
 
 ---
 
-### Stack
+## Contract work
 
-`Python` `FastAPI` `PostgreSQL` `Node.js` `React` `Three.js` `Railway`
-`WebAuthn` `Anthropic API` `Slack API` `Stripe` `Twilio`
+I am available for bounded technical engagements involving consequential AI/software workflows.
+
+### AI Agent & Workflow Reliability Review
+
+One workflow, traced end-to-end: actors, credentials, authority, evidence, state, retries, external effects, failure modes, and test coverage.
+
+Typical deliverables: system map, authority/evidence map, concrete findings, adversarial reproductions where appropriate, and a prioritized remediation plan.
+
+### Agent Authority & Provenance Review
+
+Useful when an agent can use tools or cause business actions. I look for places where service identity, caller input, model output, cached state, or human approval are being granted more authority than the evidence supports.
+
+### Fail-Closed Hardening Sprint
+
+Implement and prove scoped remediations: authority boundaries, explicit unknown states, idempotency, concurrency controls, cross-service contracts, retry/reconciliation behavior, and adversarial regression tests.
+
+### Test / Mutation Harness Integrity Review
+
+A narrower engagement focused on whether the assurance machinery can actually detect the failure classes it claims to cover: dead mutation targets, misleading fixtures, partial-suite execution, mock/real divergence, canonical-source contamination, and negative-control gaps.
+
+### AI Workflow Architecture & Implementation
+
+For teams building agentic workflows that need explicit human authority, durable state, trustworthy evidence, bounded tool access, and honest external-effect handling from the beginning.
+
+I am especially useful in **logistics, transportation, fleets, field operations, and other physical-world systems** where software decisions meet changing real conditions.
 
 ---
 
-### Available for contract work
+## Engineering stack
 
-Agent systems for companies that run crews, vehicles or field operations. I'm
-most useful where the domain is operational and the failure modes are physical.
+`Python` · `FastAPI` · `PostgreSQL` · `SQLAlchemy` · `Node.js` · `React` · `Three.js` · `Railway` · `WebAuthn` · REST APIs · semantic mutation testing · contract testing · concurrency/idempotency testing
 
-**What I haven't done:** worked inside a team's code review process, run anything
-under real load, or operated this system with a paying customer on it. The API
-surface of my own fleet is thinly tested and I have said so above rather than
-waiting to be asked. All three are worth knowing before you hire me.
+I use AI heavily in the engineering workflow. I do not present AI-generated code as proof by itself. My role is to own the problem framing, architecture, invariants, acceptance criteria, review, adversarial verification, and the decision about whether the resulting behavior is actually supported by evidence.
 
+---
+
+## What I do not claim
+
+I am not presenting this work as penetration testing, SOC 2/ISO certification, formal verification, ML-model research, or a guarantee that software is defect-free.
+
+I also do not claim ARANDA is production-proven. The private estate demonstrates substantial architecture, implementation, testing, failure analysis, and hardening work. Real operating proof is a separate milestone and I treat it that way.
+
+---
+
+## Contact
+
+If you are building an AI/agent workflow where a bad assumption can turn into a real business action, I am interested in reviewing the consequential path.
+
+**Eduardo Aranda Jr.**  
 📧 eduardoarandajr@gmail.com
-
-<sub>Test, assertion, mutation and agent figures re-measured by execution
-<!--counts:dungeon.date-->3 Aug 2026<!--/counts:dungeon.date--> — every suite and
-every hand-written mutation harness in the fleet was run, not sampled: 1,749
-Python tests, 2,532 Node assertions, 772 mutations killed with none surviving.
-The 426-mutant generated `policy/` run reported above is from 2 Aug and was NOT
-re-run. Figures explicitly marked as
-carried forward — cost, database CPU, the three 30 Jul kill rates and the
-classification of the six survivors from that run, and the 1 Aug whole-repo and
-fleet-wide mutant counts — were not re-run. No live hostnames, deployment project
-names or internal service inventory appear on this page, deliberately. Full
-methodology, the control-run data and the classification of the six 30 Jul
-survivors are written up in detail — happy to walk through them. The four
-survivors found on 2 Aug are not classified yet, and are listed above rather than
-folded into that six.</sub>
