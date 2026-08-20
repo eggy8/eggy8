@@ -23,6 +23,18 @@ The current engineering estate includes a 17-service/agent operating architectur
 
 The next important proof is not another dashboard or bigger test number. It is an authenticated, carrier-authorized, end-to-end freight workflow that survives contact with a real load.
 
+### Why ARANDA is raising now
+
+The pre-seed raise is not being framed as generic runway. The purpose is to convert a substantial prototype into controlled operating proof by funding the specific gaps that still separate the system from a real freight workflow:
+
+- production identity and security boundaries,
+- authorized freight/provider integration,
+- booking and external-effect reconciliation,
+- a controlled **Load #001**, and
+- repeated real operating evidence after that first load.
+
+The goal is to preserve the current fail-closed posture while moving from implementation and test evidence to authenticated, carrier-authorized, real-world execution.
+
 ---
 
 ## What I work on
@@ -144,29 +156,41 @@ The detailed internal orchestration prompts, assurance procedures, unpublished f
 
 I am available for bounded technical engagements involving consequential AI/software workflows.
 
-### AI Agent & Workflow Reliability Review
+### Business Workflow / AI System Discovery
 
-One workflow, traced end-to-end: actors, credentials, authority, evidence, state, retries, external effects, failure modes, and test coverage.
+Start with the real business process, actors, constraints, state, failure modes, and consequences. Then determine what should belong to AI, deterministic software, tools, durable state, or explicit human authority before implementation begins.
 
-Typical deliverables: system map, authority/evidence map, concrete findings, adversarial reproductions where appropriate, and a prioritized remediation plan.
+### AI Workflow & Agent Systems Architecture
 
-### Agent Authority & Provenance Review
+Design agentic workflows with explicit authority boundaries, durable state, bounded tool access, trustworthy evidence, and clear separation between recommendation, approval, and execution.
+
+### AI System Implementation
+
+Implement bounded workflow components where the desired behavior and authority model are sufficiently defined. The emphasis is on operational correctness and evidence, not adding an LLM where deterministic software would be more appropriate.
+
+### AI Agent Reliability Review
+
+Trace one workflow end-to-end: actors, credentials, authority, evidence, state, retries, external effects, failure modes, and test coverage.
+
+Typical deliverables can include a system map, authority/evidence map, concrete findings, adversarial reproductions where appropriate, and a prioritized remediation plan.
+
+### AI Permissions & Human-Control / Authority & Provenance Review
 
 Useful when an agent can use tools or cause business actions. I look for places where service identity, caller input, model output, cached state, or human approval are being granted more authority than the evidence supports.
 
-### Fail-Closed Hardening Sprint
+### Reliability Hardening Sprint
 
 Implement and prove scoped remediations: authority boundaries, explicit unknown states, idempotency, concurrency controls, cross-service contracts, retry/reconciliation behavior, and adversarial regression tests.
 
-### Test / Mutation Harness Integrity Review
+### Test / Evaluation / Mutation Harness Integrity Review
 
-A narrower engagement focused on whether the assurance machinery can actually detect the failure classes it claims to cover: dead mutation targets, misleading fixtures, partial-suite execution, mock/real divergence, canonical-source contamination, and negative-control gaps.
+A focused engagement on whether the assurance machinery can actually detect the failure classes it claims to cover: dead mutation targets, misleading fixtures, partial-suite execution, mock/real divergence, canonical-source contamination, negative-control gaps, and false confidence created by the test harness itself.
 
-### AI Workflow Architecture & Implementation
+### Logistics / Physical-World AI Architecture
 
-For teams building agentic workflows that need explicit human authority, durable state, trustworthy evidence, bounded tool access, and honest external-effect handling from the beginning.
+I am especially useful in **logistics, transportation, fleets, field operations, and other physical-world systems** where software decisions meet changing real conditions and human authority cannot be treated as an afterthought.
 
-I am especially useful in **logistics, transportation, fleets, field operations, and other physical-world systems** where software decisions meet changing real conditions.
+Custom consulting can be scoped around a specific consequential workflow rather than forcing a company into a generic AI package.
 
 ---
 
