@@ -122,6 +122,24 @@ The repair tightened the submission boundary, changed the presentation to **rece
 
 ---
 
+## How I use AI
+
+AI is a major part of my engineering workflow, not something I hide. I use **Claude, ChatGPT, and other AI systems as specialized collaborators** across architecture, repository investigation, implementation, testing, review, research, contradiction-finding, and technical translation.
+
+I do not treat model output as authority or proof. The working pattern is closer to:
+
+`problem/domain reality → architecture and invariants → AI-assisted investigation/build → tests and adversarial evidence → independent challenge where warranted → human acceptance`
+
+Different models are useful for different responsibilities. I may use one system to reason about architecture, another to inspect or implement against the repository, and an independent pass to challenge assumptions or evidence. For consequential decisions, agreement between models is not treated as correctness by itself.
+
+My responsibility is to own the **problem framing, domain decomposition, architecture direction, invariants, acceptance criteria, evidence standard, and final decision about whether a result is supported.** AI can contribute heavily to the work without silently becoming the decision owner.
+
+I describe ARANDA as a **ground-up, greenfield system built through an AI-assisted engineering workflow**. That does not mean every underlying pattern is novel or that every line was typed manually. It means the system was derived from the operating problem and built forward rather than copied from an existing freight-agent product and rebranded.
+
+The detailed internal orchestration prompts, assurance procedures, unpublished failure taxonomies, and proprietary engineering methods remain private.
+
+---
+
 ## Contract work
 
 I am available for bounded technical engagements involving consequential AI/software workflows.
