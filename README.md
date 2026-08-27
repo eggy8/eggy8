@@ -31,6 +31,15 @@ What the freeze supports saying, and what it does not:
 
 The current engineering estate includes a 17-service/agent operating architecture spanning freight evaluation, driver state, orchestration, JARVIS, command/control, compliance, planning, audit/assurance, and supporting services.
 
+Those 17 are the operating roster. They are not the same thing as the GitHub repo count.
+
+**Operator surfaces on top of that roster**
+
+- **Command Center** is the 2D operator board. It proxies the fleet so the browser does not hold the service credential.
+- **Space Dungeon** is the 3D/4D station of the same live fleet: rooms, consoles, crew/minion figures, and a Command Center overlay with JARVIS in the right column. It reads the fleet. The fleet does not read it. It is an instrument, not an 18th freight agent.
+- **JARVIS** is the conversational / snapshot model of the whole system. It gathers live service state and speaks it. It is not the booker and it is not human authority.
+- **KEEL** is a trading system I built and then killed. Zero capital deployed. It is not part of the freight roster.
+
 The next important proof is not another dashboard or bigger test number. It is an authenticated, carrier-authorized, end-to-end freight workflow that survives contact with a real load.
 
 ### Why ARANDA is raising now
