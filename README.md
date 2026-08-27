@@ -19,6 +19,16 @@ ARANDA is an **advanced distributed prototype undergoing production hardening**.
 
 It has **not** carried a verified real freight load, has **not** generated dispatch revenue, and is **not** production-proven. I do not use test counts, deployments, or mutation scores as substitutes for that missing real-world proof.
 
+As of the **2026-08-25 weekly estate freeze**, the private estate is stronger on **containment, assurance integrity, release provenance, and truthful verification** than it was at the 18 Aug snapshot. That progression is not an expansion of the freight architecture and is not Load #001.
+
+What the freeze supports saying, and what it does not:
+
+- Three Dispatch-Agent temporary containments on unauthenticated top-picks paths reached **merged + deployed + bounded production verification + closed/frozen**.
+- Temporary route containment is **not** permanent authenticated HumanPrincipal / carrier authority.
+- Bounded production verification of those routes is **not** production-proven business operation.
+- Assurance now fences the reviewed ACTIVE mutation population by **exact identity**, not only by count.
+- Engineering execution after that checkpoint was a **controlled pause** for an external execution-capacity constraint, not because the frozen containments failed.
+
 The current engineering estate includes a 17-service/agent operating architecture spanning freight evaluation, driver state, orchestration, JARVIS, command/control, compliance, planning, audit/assurance, and supporting services.
 
 The next important proof is not another dashboard or bigger test number. It is an authenticated, carrier-authorized, end-to-end freight workflow that survives contact with a real load.
@@ -51,6 +61,8 @@ The questions I care about are things like:
 - **Request ≠ external effect.** A timeout does not prove nothing happened, and an HTTP 200 does not prove the intended business outcome occurred.
 - **A test suite can be wrong about itself.** Harness integrity, fixtures, dependency boundaries, negative controls, and mutation validity are part of the thing being tested.
 - **Identity must survive service boundaries.** Human-readable names, caller-supplied tenant IDs, and echoed request fields are not authoritative identity.
+- **Temporary containment ≠ permanent authority.** Refusing an unauthenticated consequential route is a real boundary. It is not the same thing as proving who is allowed to use that route later.
+- **A measurement that cannot prove its own population is not a score.** Numeric totals can hide substitution. Invalid instruments must stay invalid.
 
 ---
 
@@ -114,6 +126,60 @@ The repair tightened the submission boundary, changed the presentation to **rece
 
 **Pattern:** provenance overclaim · attribution · audit-trail honesty · reporting vs verification.
 
+### 8. Unauthenticated consequential routes were contained without calling that permanent authority
+
+Unauthenticated freight-recommendation paths could accept caller-chosen identifiers and then read or mutate cached recommendation state. Auth middleware in the observed production posture was audit-only / call-through, so a missing credential was not the actual stop.
+
+The accepted move was **temporary route containment**: keep the route registered, refuse at the handler boundary before the identifier is treated as a subject and before the database path runs, and verify the refusal with a bounded production probe. The parked pre-containment body remains available so assurance can prove what containment removed.
+
+That is a real public-boundary improvement. It is not HumanPrincipal. It is not carrier-scoped authority. It is not proof that no database activity occurred unless that fact was separately observed.
+
+**Pattern:** temporary containment · capability is not authority · bounded production verification · do not inflate the evidence.
+
+### 9. Assurance scores were fenced by identity after a count proved too weak
+
+A mutation catalog can keep the same numeric ACTIVE total after one reviewed mutation is deleted and another is added. A score that only checks cardinality cannot see that substitution.
+
+The current instrument therefore carries an exact reviewed ACTIVE-ID inventory and treats instrument failure as `INVALID` rather than a favorable kill. A concurrent harness collision that shared a workspace lock was declared `VOID`, excluded from the record, and rerun sequentially.
+
+**Pattern:** identity fence · VOID vs INVALID vs killed · do not let the measuring instrument grade itself.
+
+---
+
+## Evidence-backed skills
+
+These are skills I can demonstrate from the private estate. They are not certifications and they are not a claim that ARANDA is production-proven.
+
+**Authority and confused-deputy control**  
+Separate service credentials from human/carrier authority. Preserve preparation while containing execution.
+
+**Provenance and UNKNOWN preservation**  
+Keep subject, source, freshness, and absence explicit. Do not let missing facts improve a rank, a dashboard, or a booking decision.
+
+**External-effect honesty**  
+Treat request, attempt, HTTP status, local commit, outside effect, and business outcome as different states.
+
+**Temporary containment design**  
+Refuse an unauthenticated consequential route at a named boundary without inventing a fake authorization model or deleting the route.
+
+**Release provenance**  
+Bind reviewed source identity, merge identity, and deployed identity separately. Do not collapse them into “it shipped.”
+
+**Assurance-instrument integrity**  
+Worktree isolation, dirty-tree refusal, exact mutation match, negative controls, identity-fenced ACTIVE inventories, and VOID/INVALID discipline.
+
+**Cross-service contract skepticism**  
+Prefer the real producer/consumer boundary over a richer fixture. Treat a green suite as a claim that still has to name its topology.
+
+**Bounded production verification**  
+Prove the exact observed response with the smallest honest probe. Do not convert one health check plus one refusal into operating proof.
+
+**AI-assisted engineering with human decision ownership**  
+Use Claude, ChatGPT, Grok, and other systems as specialized collaborators. Keep problem framing, invariants, acceptance, and consequential decisions human-owned.
+
+**Physical-world / logistics workflow architecture**  
+Map freight, fleet, and field operations onto identity, authority, evidence, approval, execution, reconciliation, and recovery.
+
 ---
 
 ## How I build
@@ -136,7 +202,7 @@ The repair tightened the submission boundary, changed the presentation to **rece
 
 ## How I use AI
 
-AI is a major part of my engineering workflow, not something I hide. I use **Claude, ChatGPT, and other AI systems as specialized collaborators** across architecture, repository investigation, implementation, testing, review, research, contradiction-finding, and technical translation.
+AI is a major part of my engineering workflow, not something I hide. I use **Claude, ChatGPT, Grok, and other AI systems as specialized collaborators** across architecture, repository investigation, implementation, testing, review, research, contradiction-finding, and technical translation.
 
 I do not treat model output as authority or proof. The working pattern is closer to:
 
@@ -184,7 +250,7 @@ Implement and prove scoped remediations: authority boundaries, explicit unknown 
 
 ### Test / Evaluation / Mutation Harness Integrity Review
 
-A focused engagement on whether the assurance machinery can actually detect the failure classes it claims to cover: dead mutation targets, misleading fixtures, partial-suite execution, mock/real divergence, canonical-source contamination, negative-control gaps, and false confidence created by the test harness itself.
+A focused engagement on whether the assurance machinery can actually detect the failure classes it claims to cover: dead mutation targets, misleading fixtures, partial-suite execution, mock/real divergence, canonical-source contamination, negative-control gaps, identity-preserving catalog substitution, and false confidence created by the test harness itself.
 
 ### Logistics / Physical-World AI Architecture
 
